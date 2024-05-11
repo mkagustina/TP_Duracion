@@ -220,16 +220,15 @@ ggsurvplot(fit = KM.surv, data = datos,
            palette = "hotpink3",
            surv.median.line = "hv",
            conf.int = F,
-           censor.shape = 124,
-           censor.size = 2,
+           censor = F,
            xlab = "Días",  
            ylab = "Probabilidad de supervivencia estimada",
            legend = "none",
            legend.title="",
            ggtheme = theme_survminer() + 
              theme(plot.caption = element_text(hjust = 0.5, size = 10),
-                   axis.title.x = element_text(size = 13),
-                   axis.title.y = element_text(size = 13))) +
+                   axis.title.x = element_text(size = 12),
+                   axis.title.y = element_text(size = 12))) +
   labs(caption = "Gráfico 9: Función de supervivencia estimada por KM")
 
 ```
@@ -243,7 +242,7 @@ datos_tabla <- data.frame(
   Variable = c("Rango de edad", "Menopausia","Tratamiento hormonal",
                "Quimioterapia","Receptores de progesterona", 
                "Receptores de estrógeno", "Grado de diferenciación","Tamaño"),
-  Test = c("De Tendencia", "Wilcoxon generalizado", "Peto-Peto", 
+  Test = c("Wilcoxon generalizado", "Wilcoxon generalizado", "Peto-Peto", 
            "Wilcoxon generalizado", "Log-Rank", "Log-Rank",
            "Log-Rank", "De Tendencia"),
   p_value = c("< 0.0001", "0.0095", "0.4000", "0.2200","0.7700", "0.0590","0.4400", "0.3800")
@@ -273,7 +272,6 @@ datos1 <- datos %>%
     age >= 70 ~ "Más de 70"
   ))
 
-# datos1[,"age_range"] <- cut(datos1$age, breaks = c(0,40,50,70, Inf), labels = F)
 KM.segun.age <- survfit(Surv(dtime, death) ~ age_range, data = datos1)
 
 ggsurvplot(fit = KM.segun.age, data = datos1, 
@@ -281,13 +279,14 @@ ggsurvplot(fit = KM.segun.age, data = datos1,
            surv.median.line = "hv",
            conf.int = F, 
            censor.shape = 124,
+           censor.size = 3,
            pval = T,
            pval.method = T,
            log.rank.weights = "n",
            xlab = "Días", 
            ylab = "Probabilidad",
-           legend.labs = c("Menores de 40", "40s", "50s y 60s","Más de 70"),
-           legend.title="",
+           legend.title = "Edad de las muejeres (en años)",
+           legend.labs = c("Menos de 40", "Entre 40 y 49", "Entre 50 y 69","Más de 70"),
            ggtheme = theme_survminer() + 
              theme(plot.caption = element_text(hjust = 0.5, size = 10))
            ) + labs(caption = "Gráfico 10: Probabilidad de supervivencia estimada según edad")
