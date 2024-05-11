@@ -92,26 +92,26 @@ grafico3 <- ggplot(data = datos, aes(x=factor(hormon), fill = factor(hormon), co
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_y_continuous(breaks = seq(0, 600, 100), limits = c(0,600)) +
   scale_x_discrete(label = c("No", "Si")) + 
- labs(caption = "Gráfico 3: Cantidad de mujeres que\n recibieron o no tratamiento\n hormonal",
+ labs(caption = "Gráfico 3: cantidad de mujeres que recibieron\n o no tratamiento hormonal",
        x = "Tratamiento hormonal",
        y = "Frecuencia")+
   theme_bw() +
   theme(legend.position = "none", 
-        plot.caption = element_text(hjust = 0))
+        plot.caption = element_text(hjust = 0.5))
 
 # Variable chemo
 grafico4 <- ggplot(data = datos, aes(x=factor(chemo), fill = factor(chemo), color = factor(chemo)))+
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
-  scale_y_continuous(breaks = seq(0, 600, 100), limits = c(0,600)) +
   scale_x_discrete(label = c("No", "Si")) + 
- labs(caption = "Gráfico 4: Cantidad de mujeres que\n recibieron o no quimioterapia",
+  scale_y_continuous(breaks = seq(0, 600, 100), limits = c(0,600)) +
+ labs(caption = "Gráfico 4: Cantidad de mujeres que recibieron\n o no quimioterapia",
        x = "Quimioterapia",
        y = "Frecuencia")+
   theme_bw() +
   theme(legend.position = "none", 
-        plot.caption = element_text(hjust = 0))
+        plot.caption = element_text(hjust = 0.5))
 
 
 # Variable pgr
@@ -124,12 +124,13 @@ grafico5 <- ggplot(data = datos_graf, aes(x = factor(pgr_cat), fill = factor(pgr
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_x_discrete(label = c("No", "Si")) + 
-  labs(caption = "Gráfico 5: Cantidad de mujeres que\n presentan o no receptores de progesterona",
+  scale_y_continuous(breaks = seq(0, 500, 100), limits = c(0,500)) +
+  labs(caption = "Gráfico 5: Cantidad de mujeres que presentan\n o no receptores de progesterona",
        x = "Receptores",
        y = "Frecuencia")+
   theme_bw() + 
   theme(legend.position = "none",
-        plot.caption = element_text(hjust = 0))
+        plot.caption = element_text(hjust = 0.5))
 
 # Variable er
 
@@ -138,20 +139,21 @@ grafico6 <- ggplot(data = datos_graf, aes(x = factor(er_cat), fill = factor(er_c
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_x_discrete(label = c("No", "Si")) + 
-  labs(caption = "Gráfico 6: Cantidad de mujeres que\n presentan o no receptores de estrógeno",
+  scale_y_continuous(breaks = seq(0, 500, 100), limits = c(0,500)) +
+  labs(caption = "Gráfico 6: Cantidad de mujeres que presentan\n o no receptores de estrógeno",
        x = "Receptores",
        y = "Frecuencia")+
   theme_bw() + 
   theme(legend.position = "none",
-        plot.caption = element_text(hjust = 0))
+        plot.caption = element_text(hjust = 0.5))
 
 ```
 
 * Aproximadamente 150 mujeres no presentan receptores de progesterona, mientras que apenas más de 100 no presentan receptores de estrógenos. Ambos casos se traducen en la no recomendación de un tratamiento hormonal. Resulta interesante notar que si bien muchas mujeres poseen receptores, muy pocas recibieron un tratamiento hormonal
 * Del total de mujeres bajo estudio, aproximadamente 455 de ellas no recibieron quimioterapia previo a la realización de la cirugía.
 
-```{r, echo=FALSE}
-grid.arrange(grafico3, grafico4, grafico5, grafico6, nrow = 2, ncol = 2)
+```{r, echo=FALSE, fig.height=6}
+grid.arrange(grafico3, grafico4, grafico5, grafico6, nrow = 2)
 ```
 
 ```{r, echo=FALSE, eval=FALSE}
@@ -166,30 +168,32 @@ datos_graf %>%
 
 ```{r, echo=FALSE}
 grafico7 <- ggplot(data = datos, aes(x = factor(grade), fill = factor(grade), color = factor(grade))) +
-  geom_bar(size = 1) +
+  geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
-  labs(caption = "Gráfico 7: Cantidad de mujeres\n por grado de diferenciación",
+  scale_y_continuous(breaks = seq(0, 400, 100), limits = c(0,410)) +
+  labs(caption = "Gráfico 7: Cantidad de mujeres por grado\n de diferenciación",
        x = "Grado",
        y = "Frecuencia")+
   theme_bw() +
   theme(legend.position = "none",
-        plot.caption = element_text(hjust = 0))
+        plot.caption = element_text(hjust = 0.5))
 
 
 # Variable size
 
 grafico8 <- ggplot(data = datos, aes(x = size, fill = size, color = size)) +
-  geom_bar(size = 1) +
+  geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2", "gold")) +
   scale_color_manual(values = c("hotpink4","springgreen4", "gold3")) +
-  scale_x_discrete(labels = c("Menor a 20mm", "Entre 20 y 50mm", "Mayor a 50mm")) +
-  labs(caption = "Gráfico 8: Cantidad de mujeres\n por tamaño del tumor",
-       x = "Tamaño",
+  scale_x_discrete(labels = c("Menor a 20", "Entre 20 y 50", "Mayor a 50")) +
+  scale_y_continuous(breaks = seq(0, 400, 100), limits = c(0,410)) +
+  labs(caption = "Gráfico 8: Cantidad de mujeres por\n tamaño del tumor",
+       x = "Tamaño (en milímetros)",
        y = "Frecuencia") +
   theme_bw() +
   theme(legend.position = "none",
-        plot.caption = element_text(hjust = 0))
+        plot.caption = element_text(hjust = 0.5))
 
 
 ```
@@ -198,11 +202,11 @@ grafico8 <- ggplot(data = datos, aes(x = size, fill = size, color = size)) +
 
 -   La mayoría de las mujeres presentaron, al momento de la cirugía, un tumor de entre 20 y 50mm. Alrededor de 200 mujeres tenían un tumor con menos de 20mm, y aproximadamente 80 tenían un tumor con más de 50mm.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=3}
 grid.arrange(grafico7, grafico8, nrow=1, ncol = 2 )
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7, fig.height=4}
 library(survival)
 library(survminer)
 library(survMisc)
@@ -216,12 +220,16 @@ ggsurvplot(fit = KM.surv, data = datos,
            palette = "hotpink3",
            surv.median.line = "hv",
            conf.int = F,
+           censor.shape = 124,
+           censor.size = 2,
            xlab = "Días",  
            ylab = "Probabilidad de supervivencia estimada",
-           legend = "none", 
+           legend = "none",
            legend.title="",
            ggtheme = theme_survminer() + 
-             theme(plot.caption = element_text(hjust = 0.5, size = 10))) +
+             theme(plot.caption = element_text(hjust = 0.5, size = 10),
+                   axis.title.x = element_text(size = 13),
+                   axis.title.y = element_text(size = 13))) +
   labs(caption = "Gráfico 9: Función de supervivencia estimada por KM")
 
 ```
@@ -265,23 +273,23 @@ datos1 <- datos %>%
     age >= 70 ~ "Más de 70"
   ))
 
-datos1[,"age_range"] <- cut(datos1$age, breaks = c(0,40,50,70, Inf), labels = F)
+# datos1[,"age_range"] <- cut(datos1$age, breaks = c(0,40,50,70, Inf), labels = F)
 KM.segun.age <- survfit(Surv(dtime, death) ~ age_range, data = datos1)
 
 ggsurvplot(fit = KM.segun.age, data = datos1, 
            palette = c("hotpink2", "springgreen2","gold", "darkorchid2"),
            surv.median.line = "hv",
            conf.int = F, 
-           censor.shape = 20,
+           censor.shape = 124,
+           pval = T,
+           pval.method = T,
+           log.rank.weights = "n",
            xlab = "Días", 
            ylab = "Probabilidad",
            legend.labs = c("Menores de 40", "40s", "50s y 60s","Más de 70"),
            legend.title="",
            ggtheme = theme_survminer() + 
              theme(plot.caption = element_text(hjust = 0.5, size = 10))
-           #,pval = T,
-           #pval.method = T,
-           #test.for.trend = T
            ) + labs(caption = "Gráfico 10: Probabilidad de supervivencia estimada según edad")
 
 ```
