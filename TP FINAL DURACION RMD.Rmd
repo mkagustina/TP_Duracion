@@ -453,7 +453,7 @@ ggsurvplot(fit = KM.segun.chemo, data = datos,
 # Teniendo en cuenta que la probabilidad asociada es mayor a 0.05, no se rechaza $\ H_{0})$; entonces se puede concluir que las experiencias de supervivencia son similares en ambos grupos de mujeres.
 ```
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 # Función de supervivencia según el tamaño del tumor
 datos2$Scores_size <- as.numeric(datos2$Scores_size)
 
