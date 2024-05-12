@@ -29,18 +29,18 @@ Es el tipo de cáncer más frecuente y la causa más común de muerte por cánce
 
 En este estudio se trabajará con información acerca de 583 mujeres que fueron sometidas, entre 1978 y 1985, a una cirugía primaria para extirpar el tumor. 
 
-Los datos fueron obtenidos de la base *rotterdam* del paquete *survival*. La misma cuenta con el tiempo desde la cirugía hasta la muerte o pérdida de seguimiento de la paciente, junto a otras covariables basales que se detallan a continuación:
+Los datos fueron obtenidos de la base *rotterdam* del paquete *survival* de R. La misma cuenta con el tiempo desde la cirugía hasta la muerte o pérdida de seguimiento de las pacientes, junto a otras covariables basales que se detallan a continuación:
 
-* Age: edad al momento de la cirugía (en años).
-* Meno: estado menopáusico, donde 0 = premenopáusico y 1 = postmenopáusico.
-* Hormon: variable indicadora de haber recibido un tratamiento hormonal.
-* Chemo: variable indicadora de haber recibido quimioterapia.
-* Pgr: receptores de progesterona (en fmol/l).
-* Er: receptores de estrógeno (en fmol/l).
-* Grade: grado de diferenciación del tumor, con valores de 1 a 3.
-* Size: tamaño del tumor, con niveles: menos de 20mm, entre 20 y 50mm, 50mm.
+* **Age**: edad al momento de la cirugía (en años).
+* **Meno**: estado menopáusico, donde 0 = premenopáusico y 1 = postmenopáusico.
+* **Hormon**: variable indicadora de haber recibido un tratamiento hormonal.
+* **Chemo**: variable indicadora de haber recibido quimioterapia.
+* **Pgr**: receptores de progesterona (en fmol/l).
+* **Er**: receptores de estrógeno (en fmol/l).
+* **Grade**: grado de diferenciación del tumor, con valores de 1 a 3.
+* **Size**: tamaño del tumor, con niveles: menos de 20mm, entre 20 y 50mm, 50mm.
 
-De la totalidad de mujeres en estudio, contamos con el tiempo exacto hasta la muerte de 377 de ellas y 206 censuras.
+De la totalidad de mujeres en estudio, se cuenta con el tiempo exacto hasta la muerte de 377 de ellas y 206 censuras.
 
 ## Análisis descriptivo
 
@@ -90,13 +90,15 @@ grafico2 <- ggplot(data = datos,
 
 ```
 
-*El conjunto de datos cuenta con mujeres entre 27 y 90 años de edad, teniendo la mayoría entre 40 y 80.
-
-* La cantidad de mujeres menopáusicas supera en, aproximadamente, un 50% a las mujeres no menopáusicas.
-
 ```{r echo=FALSE, fig.height=3}
 grid.arrange(grafico1, grafico2, ncol=2)
 ```
+
+El gráfico muestra que la base de datos cuenta con mujeres entre 27 y 90 años de edad, teniendo la mayoría entre 40 y 80.
+
+
+* La cantidad de mujeres menopáusicas supera en, aproximadamente, un 50% a las mujeres no menopáusicas.
+
 
 ```{r, echo=FALSE}
 
