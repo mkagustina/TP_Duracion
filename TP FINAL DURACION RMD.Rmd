@@ -22,10 +22,25 @@ output: pdf_document
 
 ## Introducción
 
-* 583 mujeres en estudio.
-* 206 datos censurados.
-* dtime: Tiempo desde la cirugía hasta la muerte o pérdida de seguimiento.
-* Covariables: Año, Edad, Menopausia, Tamaño, Grado, Receptores de progesterona, Receptores de estrógeno, Tratamiento hormonal, Quimioterapia.
+El cáncer de mama es un tipo de cáncer primario, que se origina en la mama y puede propagarse a otros tejidos u órganos del cuerpo.
+Es el tipo de cáncer más frecuente y la causa más común de muerte por cáncer en mujeres a nivel mundial.[^1]
+
+[^1]: Fuente: [https://www.paho.org/es/temas/cancer-mama](https://www.paho.org/es/temas/cancer-mama)
+
+En este estudio se trabajará con información acerca de 583 mujeres que fueron sometidas, entre 1978 y 1985, a una cirugía primaria para extirpar el tumor. 
+
+Los datos fueron obtenidos de la base *rotterdam* del paquete *survival*. La misma cuenta con el tiempo desde la cirugía hasta la muerte o pérdida de seguimiento de la paciente, junto a otras covariables basales que se detallan a continuación:
+
+* Age: edad al momento de la cirugía (en años).
+* Meno: estado menopáusico, donde 0 = premenopáusico y 1 = postmenopáusico.
+* Hormon: variable indicadora de haber recibido un tratamiento hormonal.
+* Chemo: variable indicadora de haber recibido quimioterapia.
+* Pgr: receptores de progesterona (en fmol/l).
+* Er: receptores de estrógeno (en fmol/l).
+* Grade: grado de diferenciación del tumor, con valores de 1 a 3.
+* Size: tamaño del tumor, con niveles: menos de 20mm, entre 20 y 50mm, 50mm.
+
+De la totalidad de mujeres en estudio, contamos con el tiempo exacto hasta la muerte de 377 de ellas y 206 censuras.
 
 ## Análisis descriptivo
 
@@ -285,7 +300,7 @@ ggsurvplot(fit = KM.segun.age, data = datos1,
            log.rank.weights = "n",
            xlab = "Días", 
            ylab = "Probabilidad",
-           legend.title = "Edad de las muejeres (en años)",
+           legend.title = "Edad de las mujeres (en años)",
            legend.labs = c("Menos de 40", "Entre 40 y 49", "Entre 50 y 69","Más de 70"),
            ggtheme = theme_survminer() + 
              theme(plot.caption = element_text(hjust = 0.5, size = 10))
