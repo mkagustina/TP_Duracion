@@ -262,7 +262,7 @@ ggsurvplot(fit = KM.surv, data = datos,
   labs(caption = "Gráfico 9: Función de supervivencia estimada por KM")
 ```
 \newpage
-Se puede ver que el 50% de las mujeres que están bajo estudio sobrevivirían aproximadamente hasta los 5000 días (los intervalos de días van de 2000 en 2000 y se puede considerar que la línea de la mediana estaría cercana a la mitad del intervalo [4000, 6000]), mientras que al menos 25% de ellas sobreviviría más de 4000 días y al menos el 75% de ellas sobreviviría aproximadamente 6000 días.
+Se puede ver que el 50% de las mujeres que están bajo estudio sobrevivirían aproximadamente hasta los 5000 días, mientras que al menos 25% de ellas sobreviviría más de 4000 días y al menos el 75% de ellas sobreviviría aproximadamente 6000 días.
 
 
 ## Test de hipótesis
@@ -285,15 +285,15 @@ datos_tabla <- data.frame(
 kable(datos_tabla, align = "c")
 ```
 
--   Para Tamaño, Grado de diferenciación y ambos receptores se usaron test Log-Rank
+-   Para ambos Receptores, Grado de diferenciación y Tamaño se usaron test Log-Rank.
 
--   Rango de edad, Menopausia y Quimioterapia: Se aplicó el test de Wilcoxon generalizado, variante del test Log-Rank cuyos pesos a asignar son definidos como $\ n_i$ ya que se tienen grupos desbalanceados.
+-   Para Rango de edad, Menopausia y Quimioterapia se aplicó el test de Wilcoxon generalizado, variante del test Log-Rank que asigna como pesos a la cantidad de individuos en riego $n_i$, ya que se tienen grupos desbalanceados.
 
--   Tratamiento hormonal: En el gráfico 14 se observa que las funciones de supervivencia no son similares y se sabe que son grupos demasiado desbalanceados, se decide aplicar el test de Peto-Peto modificado que utiliza en su estadistica dichos valores
+-   Tratamiento hormonal: En el gráfico 14 se observa que las funciones de supervivencia no son similares y se sabe que son grupos demasiado desbalanceados, se decide entonces aplicar el test de Peto-Peto modificado que utiliza en su estadística dichos valores
 
 ## Curvas de supervivencia
 
-Considerendo los test de hipótesis realizados, se presetan las curvas de supervivencia de aquellos cuyo resultado condujo a *"Reachazar* $\ H_{0}$".
+Considerendo los test de hipótesis realizados y con un nivel de significación del 5%, se presetan las curvas de supervivencia de aquellos cuyo resultado condujo a "*Rechazar* $\ H_{0}$".
 
 \newpage
 - Edad:
@@ -369,12 +369,11 @@ ggsurvplot(fit = KM.segun.meno, data = datos1,
            #log.rank.weights = "n"
            )+ labs(caption = "Gráfico 11: Probabilidad de supervivencia estimada según menopausia") 
 ```
-Se puede decir que las experiencias de supervivencia son diferentes entre ambos grupos. 
-
+Se puede decir que la experiencia de supervivencia es distinta en mujeres pre y post menopáusicas.
 
 - Receptores de estrógeno: 
 
-Si bien la probabilidad asociada a la estadística del test resultó ser mayor al nivel de significación con el que se está trabanjando (5%), se muestra igual su curva de supervivencia ya que la difernecia entre ambos valores no se la considera como importante.
+Aunque la diferencia en la experiencia de supervivencia entre quienes poseen receptores de estrógeno y quienes no los poseen no resultó ser significativa, el p-value asociado al test está tan cerca de 0.05 que no se la puede descartar. Por esta razón, se muestra igualmente su curva de supervivencia.
 
 ```{r, echo=FALSE,, fig.width=7, message=FALSE, warning=FALSE, fig.height=3.8}
 KM.segun.er <- survfit(Surv(dtime, death == 0) ~ er_cat, data = datos_graf)
@@ -401,9 +400,6 @@ ggsurvplot(fit = KM.segun.er, data = datos_graf,
            ) + labs(caption = "Gráfico 12: Probabilidad de supervivencia estimada según\n presencia o ausencia receptores de estrógeno") 
 ```
 
-Se puede considerar que la experiencia de supervivencia no es la misma para ambos grupos.
-
-
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 
 # Función de supervivencia según si recibó o no quimioterapia (Gráfico 15)
@@ -421,7 +417,7 @@ datos2 <- datos %>%
 ```
 
 
-Finalmente, resultó de interés ver la relación entre el tamaño del tumor de la paciente y si recibió o no quimioterapia, por ello se decidió realizar el Test Log-Rank Estratificado. El mismo condujo a *"No rechazar $\ H_{0}$"* con lo que se puede concluir que el efecto de la quimioteraía es el mismo para cualquier tamaño de tumor.
+Finalmente, resultó de interés ver la relación entre el tamaño del tumor de la paciente y si recibió o no quimioterapia, por ello se decidió realizar un Test Log-Rank Estratificado. El mismo condujo a no rechazar $\ H_{0}$", por lo que se puede concluir que el efecto de la quimioteraía es el mismo para cualquier tamaño de tumor.
 Pese a ello, se muestra la curva de supervivencia para tener una mejor idea de la decisión tomada.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7, fig.height=3.8}
