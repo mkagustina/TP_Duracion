@@ -50,16 +50,17 @@ library(survival)
 library(tidyverse)
 library(gridExtra)
 
+# Extraemos el conjunto de datos
 datos <- rotterdam %>%
   filter(year <= 1985) %>%
   select(-c(nodes, rtime, recur))
 
 
-#Conteo de eventos y censuras
-#datos %>% 
+# Conteo de censuras
+# datos %>% 
 #  count(death)
 
-# Variable age
+# Variable "age"
 
 grafico1 <- ggplot(data = datos, aes(x = age)) +
   geom_histogram(bins = 20,fill = "hotpink2",
@@ -87,8 +88,6 @@ grafico2 <- ggplot(data = datos,
   theme(axis.title = element_text(size = 10),
         legend.position = "none",
         plot.caption = element_text(hjust = 0.5))
-
-
 ```
 
 ```{r echo=FALSE, fig.height=3}
@@ -103,14 +102,18 @@ En el gráfico 2 se ve que la cantidad de mujeres post menopáusicas supera en, 
 
 ```{r, echo=FALSE}
 
-# Variable hormon
-grafico3 <- ggplot(data = datos, aes(x=factor(hormon), fill = factor(hormon), color = factor(hormon)))+
+# Variable "hormon"
+
+grafico3 <- ggplot(data = datos, aes(x=factor(hormon), 
+                                     fill = factor(hormon), 
+                                     color = factor(hormon)))+
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_y_continuous(breaks = seq(0, 600, 100), limits = c(0,600)) +
   scale_x_discrete(label = c("No", "Si")) + 
- labs(caption = "Gráfico 3: cantidad de mujeres que recibieron\n o no tratamiento hormonal",
+ labs(caption = "Gráfico 3: cantidad de mujeres que recibieron
+      o no tratamiento hormonal",
        x = "Tratamiento hormonal",
        y = "Frecuencia")+
   theme_bw() +
@@ -118,14 +121,17 @@ grafico3 <- ggplot(data = datos, aes(x=factor(hormon), fill = factor(hormon), co
         legend.position = "none", 
         plot.caption = element_text(hjust = 0.5))
 
-# Variable chemo
-grafico4 <- ggplot(data = datos, aes(x=factor(chemo), fill = factor(chemo), color = factor(chemo)))+
+# Variable "chemo"
+
+grafico4 <- ggplot(data = datos, aes(x=factor(chemo), fill = factor(chemo),
+                                     color = factor(chemo)))+
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_x_discrete(label = c("No", "Si")) + 
   scale_y_continuous(breaks = seq(0, 600, 100), limits = c(0,600)) +
- labs(caption = "Gráfico 4: Cantidad de mujeres que recibieron\n o no quimioterapia",
+ labs(caption = "Gráfico 4: Cantidad de mujeres que recibieron
+      o no quimioterapia",
        x = "Quimioterapia",
        y = "Frecuencia")+
   theme_bw() +
@@ -134,18 +140,23 @@ grafico4 <- ggplot(data = datos, aes(x=factor(chemo), fill = factor(chemo), colo
         plot.caption = element_text(hjust = 0.5))
 
 
-# Variable pgr
+# Variable "pgr"
+
+# Tratamos ambos Receptores como variables discretas dicotómicas
 datos_graf <- datos %>% 
   mutate(pgr_cat = ifelse(pgr == 0, 0, 1),
          er_cat = ifelse(er == 0, 0, 1))
 
-grafico5 <- ggplot(data = datos_graf, aes(x = factor(pgr_cat), fill = factor(pgr_cat), color = factor(pgr_cat))) +
+grafico5 <- ggplot(data = datos_graf, aes(x = factor(pgr_cat), 
+                                          fill = factor(pgr_cat), 
+                                          color = factor(pgr_cat))) +
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_x_discrete(label = c("No", "Si")) + 
   scale_y_continuous(breaks = seq(0, 500, 100), limits = c(0,500)) +
-  labs(caption = "Gráfico 5: Cantidad de mujeres que presentan\n o no receptores de progesterona",
+  labs(caption = "Gráfico 5: Cantidad de mujeres que presentan
+       o no receptores de progesterona",
        x = "Receptores",
        y = "Frecuencia")+
   theme_bw() + 
@@ -155,13 +166,16 @@ grafico5 <- ggplot(data = datos_graf, aes(x = factor(pgr_cat), fill = factor(pgr
 
 # Variable er
 
-grafico6 <- ggplot(data = datos_graf, aes(x = factor(er_cat), fill = factor(er_cat), color = factor(er_cat))) +
+grafico6 <- ggplot(data = datos_graf, aes(x = factor(er_cat), 
+                                          fill = factor(er_cat), 
+                                          color = factor(er_cat))) +
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_x_discrete(label = c("No", "Si")) + 
   scale_y_continuous(breaks = seq(0, 500, 100), limits = c(0,500)) +
-  labs(caption = "Gráfico 6: Cantidad de mujeres que presentan\n o no receptores de estrógeno",
+  labs(caption = "Gráfico 6: Cantidad de mujeres que presentan
+  o no receptores de estrógeno",
        x = "Receptores",
        y = "Frecuencia")+
   theme_bw() + 
@@ -183,12 +197,15 @@ Además, en el gráfico 4 se observa que del total de mujeres bajo estudio, apro
 
 ```{r, echo=FALSE}
 
-grafico7 <- ggplot(data = datos, aes(x = factor(grade), fill = factor(grade), color = factor(grade))) +
+grafico7 <- ggplot(data = datos, aes(x = factor(grade), 
+                                     fill = factor(grade), 
+                                     color = factor(grade))) +
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2")) +
   scale_color_manual(values = c("hotpink4","springgreen4")) +
   scale_y_continuous(breaks = seq(0, 400, 100), limits = c(0,410)) +
-  labs(caption = "Gráfico 7: Cantidad de mujeres por grado\n de diferenciación",
+  labs(caption = "Gráfico 7: Cantidad de mujeres por grado
+  de diferenciación",
        x = "Grado",
        y = "Frecuencia")+
   theme_bw() +
@@ -202,7 +219,8 @@ grafico8 <- ggplot(data = datos, aes(x = size, fill = size, color = size)) +
   geom_bar(size = 0.5) +
   scale_fill_manual(values = c("hotpink2","springgreen2", "gold")) +
   scale_color_manual(values = c("hotpink4","springgreen4", "gold3")) +
-  scale_x_discrete(labels = c("Menor a 20", "Entre 20 y 50", "Mayor a 50")) +
+  scale_x_discrete(labels = 
+                     c("Menor a 20", "Entre 20 y 50", "Mayor a 50")) +
   scale_y_continuous(breaks = seq(0, 400, 100), limits = c(0,410)) +
   labs(caption = "Gráfico 8: Cantidad de mujeres por\n tamaño del tumor",
        x = "Tamaño (en milímetros)",
@@ -211,8 +229,6 @@ grafico8 <- ggplot(data = datos, aes(x = size, fill = size, color = size)) +
   theme(axis.title = element_text(size = 10),
         legend.position = "none",
         plot.caption = element_text(hjust = 0.5))
-
-
 ```
 
 ```{r, echo=FALSE, fig.height=3}
@@ -230,8 +246,7 @@ La mayoría de las mujeres presentaron, al momento de la cirugía, un tumor de e
 
 A continuación se muestra la curva de supervivencia estimada por Kaplan-Meier para todos los datos:
 
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7, fig.height=3.8}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=3.5, fig.width=7}
 library(survminer)
 library(survMisc)
 library(ggpubr)
@@ -255,9 +270,12 @@ ggsurvplot(fit = KM.surv, data = datos,
            ggtheme = theme_survminer() + 
              theme(axis.title.x = element_text(size = 10),
                    axis.title.y = element_text(size = 10),
-                   plot.caption = element_text(hjust = 0.5, size = 10)))$plot + 
-  geom_segment(data = cuantiles, aes(x = km.quantile, xend = km.quantile,  y = 1-q, yend = 0), lty = 3) +
-  geom_segment(data = cuantiles, aes(x = 0, xend = km.quantile,  y = 1-q, yend = 1-q), lty = 3) +
+                   plot.caption = element_text(hjust = 0.5, 
+                                               size = 10)))$plot + 
+  geom_segment(data = cuantiles, aes(x = km.quantile, xend = km.quantile, 
+                                     y = 1-q, yend = 0), lty = 3) +
+  geom_segment(data = cuantiles, aes(x = 0, xend = km.quantile, 
+                                     y = 1-q, yend = 1-q), lty = 3) +
   labs(caption = "Gráfico 9: Función de supervivencia estimada por KM")
 ```
 
@@ -269,14 +287,18 @@ A continuación se realizan test de hipótesis que permiten evaluar si existen d
 
 ```{r, echo=FALSE}
 library(knitr)
+
 # Datos para la tabla
 datos_tabla <- data.frame(
   Variable = c("Rango de edad", "Menopausia","Tratamiento hormonal",
                "Quimioterapia","Receptores de progesterona", 
-               "Receptores de estrógeno", "Grado de diferenciación", "Tamaño"),
+               "Receptores de estrógeno", "Grado de diferenciación",
+               "Tamaño"),
   Test = c("Wilcoxon generalizado", "Wilcoxon generalizado", "Peto-Peto", 
-           "Wilcoxon generalizado", "Log-Rank", "Log-Rank", "Log-Rank", "Log-Rank"),
-  p_value = c("< 0.0001", "0.01", "0.40", "0.22","0.77", "0.06", "0.44", "0.62")
+           "Wilcoxon generalizado", "Log-Rank", "Log-Rank", "Log-Rank",
+           "Log-Rank"),
+  p_value = c("< 0.0001", "0.01", "0.40", "0.22","0.77", "0.06", "0.44",
+              "0.62")
 )
 
 # Imprimir tabla
@@ -293,12 +315,13 @@ kable(datos_tabla, align = "c")
 
 Considerando los test de hipótesis realizados y con un nivel de significación del 5%, se presentan las curvas de supervivencia de aquellos cuyo resultado condujo a "*Rechazar* $\ H_{0}$". 
 Cabe aclarar que las lineas verticales que se observan en las curvas representan datos censurados.
-\newpage
 
 - Edad:
 
 ```{r, echo=FALSE, fig.width=7, message=FALSE, warning=FALSE, fig.height=3.8}
-# Función de supervivencia según edad (agrupada en intervalos)
+# Función de supervivencia según edad
+
+# Categorizamos la variable "edad"
 datos1 <- datos %>% 
   mutate(age_range = case_when(
     age < 40 ~ "Menos de 40",
@@ -311,10 +334,8 @@ KM.segun.age <- survfit(Surv(dtime, death) ~ age_range, data = datos1)
 
 mediana <- data.frame(cbind(
   q = 0.5,
-  quantile(KM.segun.age)$quantile 
-  #Le saco lo del "km.quantile" porque no lo pone al ser varias categorias.
+  quantile(KM.segun.age)$quantile
 ))
-
 
 ggsurvplot(fit = KM.segun.age, data = datos1, 
            palette = c("hotpink2", "springgreen2","gold", "darkorchid2"),
@@ -357,7 +378,8 @@ ggsurvplot(fit = KM.segun.meno, data = datos1,
            xlab = "Días", 
            ylab = "Probabilidad", 
            legend.title="",
-           legend.labs = c("Mujeres premenopáusicas", "Mujeres postmenopáusicas"),
+           legend.labs = c("Mujeres premenopáusicas", 
+                           "Mujeres postmenopáusicas"),
            ggtheme = theme_survminer() + 
              theme(axis.title.x = element_text(size = 10),
                    axis.title.y = element_text(size = 10),
@@ -368,13 +390,15 @@ ggsurvplot(fit = KM.segun.meno, data = datos1,
            )+ labs(caption = "Gráfico 11: Probabilidad de supervivencia estimada según menopausia") 
 ```
 Se puede decir que la experiencia de supervivencia es distinta en mujeres pre y post menopáusicas.
-\newpage
 
 - Receptores de estrógeno: 
 
 Aunque la diferencia en la experiencia de supervivencia entre quienes poseen receptores de estrógeno y quienes no los poseen no resultó ser significativa, el p-value asociado al test está tan cerca de 0.05 que no se la puede descartar. Por esta razón, se muestra igualmente su curva de supervivencia.
 
 ```{r, echo=FALSE,, fig.width=7, message=FALSE, warning=FALSE, fig.height=3.7}
+
+# Función de supervivencia según receptores de estrógeno
+
 KM.segun.er <- survfit(Surv(dtime, death == 0) ~ er_cat, data = datos_graf)
 
 mediana <- data.frame(cbind(
@@ -395,19 +419,20 @@ ggsurvplot(fit = KM.segun.er, data = datos_graf,
              theme(axis.title.x = element_text(size = 10),
                    axis.title.y = element_text(size = 10),
                    plot.caption = element_text(hjust = 0.5, size = 10))
-           #,pval = T, pval.method = T
+           #,pval = T, 
+           # pval.method = T
            ) + labs(caption = "Gráfico 12: Probabilidad de supervivencia estimada según\n presencia o ausencia receptores de estrógeno") 
 ```
-\vspace{0.10cm}
 
-Finalmente, resulta de interés ver la relación entre el tamaño del tumor de la paciente y si recibió o no quimioterapia, por ello se decidió realizar un Test Log-Rank estratificado. El mismo condujo a no rechazar $\ H_{0}$, por lo que se puede concluir que el efecto de la quimioterapia es el mismo para cualquier tamaño de tumor; esta conclusión no es definitiva dado que se tienen curvas que fueron estimadas con pocas observaciones.
-Pese a ello, se muestra la curva de supervivencia para tener una mejor idea de la decisión tomada 
+Finalmente, resulta de interés ver la relación entre el tamaño del tumor de la paciente y si recibió o no quimioterapia, por ello se decidió realizar un Test Log-Rank estratificado. El mismo condujo a no rechazar $\ H_{0}$, por lo que se puede concluir que el efecto de la quimioterapia es el mismo para cualquier tamaño de tumor. Sin embargo, es importante señalar que esta conclusión debe ser tomada con precaución debido al reducido número de observaciones disponibles para estimar las curvas.
+A pesar de ello, se muestra la curva de supervivencia para tener una visión más clara sobre la decisión tomada.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7, fig.height=3.7}
 
-levels(datos$size) <- c("20mm o menos", "entre 20 y 50mm", "mayor a 50mm")
+# Función de supervivencia según si recibó o no quimioterapia estratificado
+# por el tamaño del tumor
 
-# Función de supervivencia según si recibó o no quimioterapia
+levels(datos$size) <- c("20mm o menos", "entre 20 y 50mm", "mayor a 50mm")
 
 KM.segun.chemo <- survfit(Surv(dtime, death == 0) ~ chemo, data = datos)
 
@@ -417,7 +442,7 @@ n <- datos %>%
   summarise(n = n())
 
 # Creo un data frame para las anotaciones
-annotations <- data.frame(
+notas <- data.frame(
   size = c("20mm o menos", "entre 20 y 50mm", "mayor a 50mm",
            "20mm o menos", "entre 20 y 50mm", "mayor a 50mm"),
   chemo = c("No recibió", "No recibió", "No recibió", 
@@ -442,9 +467,10 @@ ggsurvplot(fit = KM.segun.chemo, data = datos,
              theme(axis.title.x = element_text(size = 10),
                    axis.title.y = element_text(size = 10),
                    plot.caption = element_text(hjust = 0.5, size = 10))) + 
-  labs(caption = "Gráfico 13") +
+  labs(caption = "Gráfico 13: probabilidad de supervivencia estimada por tamaño del tumor y quimioterapia") +
   scale_x_continuous(breaks = c(0, 4000, 8000)) + 
-  geom_text(data = annotations, aes(x = x, y = y, label = label, color = chemo), size = 2.5, fontface = "bold")
+  geom_text(data = notas, aes(x = x, y = y, label = label, color = chemo),
+            size = 2.5, fontface = "bold")
 
 ```
 
@@ -471,7 +497,9 @@ ggsurvplot(fit = KM.segun.hormo, data = datos,
 ```
 
 ```{r, echo=FALSE, eval=FALSE}
-# Gráfico de supervivencia para quimioterapia:
+
+# Función de supervivencia para quimioterapia
+
 ggsurvplot(fit = KM.segun.chemo, data = datos,
            title = "Gráfico 15: Probabilidad de supervivencia estimada 
            según quimioterapia", 
@@ -515,6 +543,9 @@ ggsurvplot(fit = KM.segun.tamaño, data = datos,
 ```
 
 ```{r, echo=FALSE, eval=FALSE}
+
+# Función de supervivencia para grado de diferenciación tumoral
+
 KM.segun.grado <- survfit(Surv(dtime, death == 0) ~ grade, data = datos)
 
 ggsurvplot(fit = KM.segun.grado, data = datos1,
@@ -535,6 +566,9 @@ ggsurvplot(fit = KM.segun.grado, data = datos1,
 ```
 
 ```{r, echo=FALSE, eval=FALSE}
+
+# Función de supervivencia para receptoreds de progesterona
+
 KM.segun.pgr <- survfit(Surv(dtime, death == 0) ~ pgr_cat, data = datos_graf)
 
 ggsurvplot(fit = KM.segun.pgr, data = datos_graf,
