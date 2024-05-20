@@ -291,7 +291,8 @@ kable(datos_tabla, align = "c")
 
 ## Curvas de supervivencia
 
-Considerendo los test de hipótesis realizados y con un nivel de significación del 5%, se presentan las curvas de supervivencia de aquellos cuyo resultado condujo a "*Rechazar* $\ H_{0}$".
+Considerando los test de hipótesis realizados y con un nivel de significación del 5%, se presentan las curvas de supervivencia de aquellos cuyo resultado condujo a "*Rechazar* $\ H_{0}$". 
+Cabe aclarar que las lineas verticales que se observan en las curvas representan datos censurados.
 \newpage
 
 - Edad:
@@ -354,7 +355,7 @@ ggsurvplot(fit = KM.segun.meno, data = datos1,
            censor.shape = 124,
            censor.size = 2.5,
            xlab = "Días", 
-           ylab = "Probabilidad",
+           ylab = "Probabilidad", 
            legend.title="",
            legend.labs = c("Mujeres premenopáusicas", "Mujeres postmenopáusicas"),
            ggtheme = theme_survminer() + 
@@ -373,7 +374,7 @@ Se puede decir que la experiencia de supervivencia es distinta en mujeres pre y 
 
 Aunque la diferencia en la experiencia de supervivencia entre quienes poseen receptores de estrógeno y quienes no los poseen no resultó ser significativa, el p-value asociado al test está tan cerca de 0.05 que no se la puede descartar. Por esta razón, se muestra igualmente su curva de supervivencia.
 
-```{r, echo=FALSE,, fig.width=7, message=FALSE, warning=FALSE, fig.height=3.8}
+```{r, echo=FALSE,, fig.width=7, message=FALSE, warning=FALSE, fig.height=3.7}
 KM.segun.er <- survfit(Surv(dtime, death == 0) ~ er_cat, data = datos_graf)
 
 mediana <- data.frame(cbind(
@@ -399,10 +400,10 @@ ggsurvplot(fit = KM.segun.er, data = datos_graf,
 ```
 \vspace{0.10cm}
 
-Finalmente, resulta de interés ver la relación entre el tamaño del tumor de la paciente y si recibió o no quimioterapia, por ello se decidió realizar un Test Log-Rank estratificado. El mismo condujo a no rechazar $\ H_{0}$", por lo que se puede concluir que el efecto de la quimioterapia es el mismo para cualquier tamaño de tumor.
-Pese a ello, se muestra la curva de supervivencia para tener una mejor idea de la decisión tomada.
+Finalmente, resulta de interés ver la relación entre el tamaño del tumor de la paciente y si recibió o no quimioterapia, por ello se decidió realizar un Test Log-Rank estratificado. El mismo condujo a no rechazar $\ H_{0}$, por lo que se puede concluir que el efecto de la quimioterapia es el mismo para cualquier tamaño de tumor; esta conclusión no es definitiva dado que se tienen curvas que fueron estimadas con pocas observaciones.
+Pese a ello, se muestra la curva de supervivencia para tener una mejor idea de la decisión tomada 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7, fig.height=3.8}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=7, fig.height=3.7}
 
 levels(datos$size) <- c("20mm o menos", "entre 20 y 50mm", "mayor a 50mm")
 
